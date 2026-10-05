@@ -3,7 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Website Portfolio</title>
+    <title>Muhammad Abdul Karim Luthfi | Web Developer & Desainer Grafis</title>
+    <meta
+      name="description"
+      content="Portofolio Muhammad Abdul Karim Luthfi — mahasiswa Sistem & Teknologi Informasi yang fokus pada Web Development (CodeIgniter 4) dan Desain Grafis."
+    />
+    <meta name="author" content="Muhammad Abdul Karim Luthfi" />
+    <meta name="theme-color" content="#e0e5ec" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1e293b" media="(prefers-color-scheme: dark)" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Muhammad Abdul Karim Luthfi | Portofolio" />
+    <meta
+      property="og:description"
+      content="Web Developer (CodeIgniter 4) & Desainer Grafis. Lihat proyek, keahlian, dan hubungi saya."
+    />
+    <meta property="og:image" content="img/masjid-albarkah.png" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='16' fill='%233b82f6'/><text x='50%' y='54%' dominant-baseline='middle' text-anchor='middle' font-family='Segoe UI,Arial' font-weight='800' font-size='28' fill='white'>AK</text></svg>"
+    />
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome untuk Ikon -->
@@ -14,18 +33,18 @@
 
     <script>
       tailwind.config = {
-        darkMode: 'class', // Mengaktifkan dark mode via class
+        darkMode: "class",
         theme: {
           extend: {
             colors: {
-              // Menggunakan CSS Variables agar dinamis
-              'neu-bg': 'var(--bg-color)',
-              'neu-text': 'var(--text-color)',
-              'neu-heading': 'var(--heading-color)',
-              'neu-icon': 'var(--icon-color)',
+              "neu-bg": "var(--bg-color)",
+              "neu-text": "var(--text-color)",
+              "neu-heading": "var(--heading-color)",
+              "neu-icon": "var(--icon-color)",
             },
             boxShadow: {
               neu: "var(--shadow-main)",
+              "neu-sm": "var(--shadow-sm)",
               "neu-pressed":
                 "inset 6px 6px 10px 0 var(--shadow-dark), inset -6px -6px 10px 0 var(--shadow-light)",
             },
@@ -35,6 +54,15 @@
           },
         },
       };
+
+      // Terapkan tema sebelum render agar tidak berkedip
+      (function () {
+        const saved = localStorage.getItem("theme");
+        const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (saved === "dark" || (!saved && systemDark)) {
+          document.documentElement.classList.add("dark");
+        }
+      })();
     </script>
 
     <style>
@@ -46,6 +74,7 @@
         --shadow-dark: #a3b1c6;
         --shadow-light: #ffffff;
         --shadow-main: 9px 9px 16px rgb(163, 177, 198, 0.6), -9px -9px 16px rgba(255, 255, 255, 0.5);
+        --shadow-sm: 4px 4px 8px rgb(163, 177, 198, 0.6), -4px -4px 8px rgba(255, 255, 255, 0.6);
       }
 
       .dark {
@@ -56,10 +85,16 @@
         --shadow-dark: #0f172a;
         --shadow-light: #334155;
         --shadow-main: 8px 8px 16px #0f172a, -8px -8px 16px #2d3d54;
+        --shadow-sm: 4px 4px 8px #0f172a, -4px -4px 8px #2d3d54;
       }
 
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 6rem;
+      }
       body {
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        transition: background-color 0.3s ease, color 0.3s ease;
       }
       .neu-element {
         transition: all 0.3s ease;
@@ -67,220 +102,896 @@
       .neu-element:hover {
         transform: translateY(-3px);
       }
-      /* Efek tombol ditekan */
-      .neu-btn:active, .neu-card-active:active {
+      .neu-btn:active,
+      .neu-card-active:active {
         box-shadow:
           inset 6px 6px 10px 0 var(--shadow-dark),
           inset -6px -6px 10px 0 var(--shadow-light);
         transform: translateY(2px);
       }
+
+      .nav-link.active {
+        box-shadow:
+          inset 4px 4px 8px 0 var(--shadow-dark),
+          inset -4px -4px 8px 0 var(--shadow-light);
+        color: #3b82f6;
+      }
+
+      .filter-btn.active {
+        box-shadow:
+          inset 4px 4px 8px 0 var(--shadow-dark),
+          inset -4px -4px 8px 0 var(--shadow-light);
+        color: #3b82f6;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.7s ease, transform 0.7s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: none;
+      }
+
+      .skill-bar-fill {
+        width: 0;
+        transition: width 1.2s ease;
+      }
+
+      .neu-input {
+        background: var(--bg-color);
+        color: var(--heading-color);
+        box-shadow:
+          inset 4px 4px 8px 0 var(--shadow-dark),
+          inset -4px -4px 8px 0 var(--shadow-light);
+      }
+      .neu-input::placeholder {
+        color: var(--text-color);
+        opacity: 0.7;
+      }
+      .neu-input:focus {
+        outline: 2px solid #3b82f6;
+        outline-offset: 2px;
+      }
+
+      @keyframes typing-caret {
+        50% {
+          border-color: transparent;
+        }
+      }
+      .typing {
+        border-right: 3px solid #3b82f6;
+        padding-right: 4px;
+        animation: typing-caret 0.8s step-end infinite;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        .reveal,
+        .skill-bar-fill {
+          transition: none;
+          opacity: 1;
+          transform: none;
+        }
+        .typing {
+          animation: none;
+        }
+      }
     </style>
   </head>
-  <body
-    class="bg-neu-bg text-neu-text min-h-screen flex flex-col items-center justify-center p-6 relative"
-  >
-  
-    <button id="theme-toggle" class="fixed top-6 right-6 z-50 w-14 h-14 rounded-full bg-neu-bg shadow-neu flex items-center justify-center text-xl text-neu-icon hover:scale-110 active:scale-95 transition-all duration-300" aria-label="Toggle theme">
-        <i id="theme-icon" class="fas fa-moon"></i>
-    </button>
-
-    <main
-      class="w-full max-w-4xl bg-neu-bg rounded-neu shadow-neu p-8 md:p-12 flex flex-col md:flex-row items-center gap-10 transition-colors duration-300"
+  <body class="bg-neu-bg text-neu-text min-h-screen">
+    <a
+      href="#beranda"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:px-4 focus:py-2 focus:rounded-full focus:bg-blue-500 focus:text-white"
+      >Lewati ke konten</a
     >
-      <div class="relative group">
-        <div
-          class="w-48 h-48 rounded-full shadow-neu border-4 border-neu-bg flex items-center justify-center overflow-hidden mx-auto transition-colors duration-300"
-        >
-          <img
-            src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
-            alt="Profile"
-            class="w-full h-full object-cover"
-          />
-        </div>
 
-        <div class="flex justify-center gap-4 mt-8">
-          <a
-            href="https://github.com/luthfi1771"
-            class="neu-btn w-12 h-12 rounded-full bg-neu-bg shadow-neu flex items-center justify-center text-xl text-neu-icon hover:text-blue-600 transition-all"
-            target="_blank"
-            rel="noopener noreferrer"
+    <!-- ================= NAVBAR ================= -->
+    <header class="fixed top-0 inset-x-0 z-50 px-4 pt-4">
+      <nav
+        class="max-w-5xl mx-auto bg-neu-bg rounded-full shadow-neu px-4 md:px-6 py-3 flex items-center justify-between gap-4"
+        aria-label="Navigasi utama"
+      >
+        <a href="#beranda" class="flex items-center gap-2 font-extrabold text-neu-heading">
+          <span
+            class="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center text-sm"
+            aria-hidden="true"
+            >AK</span
           >
-            <i class="fab fa-github"></i>
-          </a>
-          <a
-            href="https://www.linkedin.com/in/muhammad-abdul-karim-luthfi-40283033b"
-            class="neu-btn w-12 h-12 rounded-full bg-neu-bg shadow-neu flex items-center justify-center text-xl text-neu-icon hover:text-blue-400 transition-all"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <i class="fab fa-linkedin-in"></i>
-          </a>
-          <a
-            href="https://www.instagram.com/muhammad.17abdulkarim"
-            class="neu-btn w-12 h-12 rounded-full bg-neu-bg shadow-neu flex items-center justify-center text-xl text-neu-icon hover:text-pink-500 transition-all"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <i class="fab fa-instagram"></i>
-          </a>
-        </div>
-      </div>
-
-      <div class="flex-1 text-center md:text-left">
-        <h2
-          class="text-sm font-bold tracking-widest opacity-60 uppercase mb-2"
-        >
-          Portfolio
-        </h2>
-        <h1 class="text-4xl md:text-5xl font-extrabold text-neu-heading mb-4">
-          Halo, Saya
-          <span class="text-blue-500">Muhammad Abdul Karim Luthfi</span>
-        </h1>
-        <p class="text-neu-text opacity-90 leading-relaxed mb-8">
-          Saya seorang mahasiswa Sistem & Teknologi Informasi yang fokus pada
-          Web Development (CodeIgniter) dan Desain Grafis. Saya suka membuat
-          banner acara dan mengubah foto menjadi karya seni digital.
-        </p>
-
-        <div class="grid grid-cols-2 gap-4 mb-8">
-          <div
-            class="p-4 rounded-2xl shadow-neu-pressed text-sm font-semibold flex items-center gap-3 text-neu-text"
-          >
-            <i class="fas fa-code text-blue-500"></i> Web Dev (CI4)
-          </div>
-          <div
-            class="p-4 rounded-2xl shadow-neu-pressed text-sm font-semibold flex items-center gap-3 text-neu-text"
-          >
-            <i class="fas fa-camera text-purple-500"></i> Photography
-          </div>
-          <div
-            class="p-4 rounded-2xl shadow-neu-pressed text-sm font-semibold flex items-center gap-3 text-neu-text"
-          >
-            <i class="fas fa-paint-brush text-pink-500"></i> Banner Design
-          </div>
-          <div
-            class="p-4 rounded-2xl shadow-neu-pressed text-sm font-semibold flex items-center gap-3 text-neu-text"
-          >
-            <i class="fas fa-futbol text-green-500"></i> Football Fan
-          </div>
-        </div>
-
-        <div
-          class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
-        >
-          <button
-            class="neu-btn px-8 py-3 rounded-full bg-neu-bg shadow-neu font-bold text-neu-icon hover:text-blue-600 transition-all"
-          >
-            Download CV
-          </button>
-          <a 
-            href="https://wa.me/628881150984"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="neu-btn px-8 py-3 rounded-full shadow-neu bg-blue-500 text-white font-bold hover:bg-blue-600 transition-all border border-transparent flex items-center justify-center"
-          >
-            Hubungi Saya
-          </a>
-        </div>
-      </div>
-    </main>
-
-    <section class="mt-16 w-full max-w-4xl">
-      <h3 class="text-2xl font-bold text-center mb-8 text-neu-heading">
-        Proyek Terbaru
-      </h3>
-      <div class="grid md:grid-cols-2 gap-8">
-        <!-- Project 1: SI Masjid Al Barkah -->
-        <a
-          href="https://www.masjidalbarkah.id"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="p-6 bg-neu-bg rounded-neu shadow-neu hover:shadow-neu-pressed transition-all cursor-pointer group flex flex-col justify-between"
-        >
-          <div>
-            <div
-              class="h-44 rounded-2xl shadow-neu-pressed mb-4 overflow-hidden relative flex items-center justify-center bg-gray-100 dark:bg-gray-800"
-            >
-              <img
-                src="img/masjid-albarkah.png"
-                alt="Thumbnail SI Masjid Al Barkah"
-                class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-              />
-              <div
-                class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white text-sm font-semibold gap-2 backdrop-blur-[2px]"
-              >
-                <span>Kunjungi Website</span>
-                <i class="fas fa-external-link-alt text-xs"></i>
-              </div>
-            </div>
-            <div class="flex items-center justify-between mb-2">
-              <h4 class="text-xl font-bold text-neu-heading group-hover:text-blue-500 transition-colors">
-                SI Masjid Al Barkah
-              </h4>
-              <i class="fas fa-external-link-alt text-sm text-blue-500 opacity-75 group-hover:opacity-100 transition-opacity"></i>
-            </div>
-            <p class="text-sm text-neu-text opacity-80 mb-3">
-              Website interaktif untuk manajemen data masjid dengan CodeIgniter 4.
-            </p>
-          </div>
-          <div class="text-xs font-semibold text-blue-500 flex items-center gap-1.5 mt-2">
-            <i class="fas fa-globe"></i>
-            <span>www.masjidalbarkah.id</span>
-          </div>
+          <span class="hidden sm:inline">Luthfi</span>
         </a>
 
-        <!-- Project 2: Desain Festival Hadroh -->
-        <div
-          class="p-6 bg-neu-bg rounded-neu shadow-neu hover:shadow-neu-pressed transition-all cursor-pointer group flex flex-col justify-between"
-        >
-          <div>
-            <div
-              class="h-44 rounded-2xl shadow-neu-pressed mb-4 flex items-center justify-center text-4xl text-gray-400 group-hover:text-pink-500 transition-colors"
+        <ul class="hidden lg:flex items-center gap-1 text-sm font-semibold">
+          <li><a href="#beranda" class="nav-link px-4 py-2 rounded-full block hover:text-blue-500 transition-colors">Beranda</a></li>
+          <li><a href="#tentang" class="nav-link px-4 py-2 rounded-full block hover:text-blue-500 transition-colors">Tentang</a></li>
+          <li><a href="#keahlian" class="nav-link px-4 py-2 rounded-full block hover:text-blue-500 transition-colors">Keahlian</a></li>
+          <li><a href="#layanan" class="nav-link px-4 py-2 rounded-full block hover:text-blue-500 transition-colors">Layanan</a></li>
+          <li><a href="#perjalanan" class="nav-link px-4 py-2 rounded-full block hover:text-blue-500 transition-colors">Perjalanan</a></li>
+          <li><a href="#proyek" class="nav-link px-4 py-2 rounded-full block hover:text-blue-500 transition-colors">Proyek</a></li>
+          <li><a href="#kontak" class="nav-link px-4 py-2 rounded-full block hover:text-blue-500 transition-colors">Kontak</a></li>
+        </ul>
+
+        <div class="flex items-center gap-3">
+          <button
+            id="theme-toggle"
+            class="neu-btn w-11 h-11 rounded-full bg-neu-bg shadow-neu-sm flex items-center justify-center text-lg text-neu-icon hover:text-blue-500 transition-all"
+            aria-label="Ganti tema terang/gelap"
+          >
+            <i id="theme-icon" class="fas fa-moon" aria-hidden="true"></i>
+          </button>
+          <button
+            id="menu-toggle"
+            class="neu-btn lg:hidden w-11 h-11 rounded-full bg-neu-bg shadow-neu-sm flex items-center justify-center text-lg text-neu-icon"
+            aria-label="Buka menu"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+          >
+            <i id="menu-icon" class="fas fa-bars" aria-hidden="true"></i>
+          </button>
+        </div>
+      </nav>
+
+      <div
+        id="mobile-menu"
+        class="hidden lg:hidden max-w-5xl mx-auto mt-3 bg-neu-bg rounded-3xl shadow-neu p-4"
+      >
+        <ul class="grid grid-cols-2 gap-2 text-sm font-semibold">
+          <li><a href="#beranda" class="nav-link mobile-link px-4 py-3 rounded-2xl block">Beranda</a></li>
+          <li><a href="#tentang" class="nav-link mobile-link px-4 py-3 rounded-2xl block">Tentang</a></li>
+          <li><a href="#keahlian" class="nav-link mobile-link px-4 py-3 rounded-2xl block">Keahlian</a></li>
+          <li><a href="#layanan" class="nav-link mobile-link px-4 py-3 rounded-2xl block">Layanan</a></li>
+          <li><a href="#perjalanan" class="nav-link mobile-link px-4 py-3 rounded-2xl block">Perjalanan</a></li>
+          <li><a href="#proyek" class="nav-link mobile-link px-4 py-3 rounded-2xl block">Proyek</a></li>
+          <li class="col-span-2"><a href="#kontak" class="nav-link mobile-link px-4 py-3 rounded-2xl block text-center">Kontak</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <main class="px-6 pt-32 pb-16 flex flex-col items-center gap-24">
+      <!-- ================= HERO ================= -->
+      <section
+        id="beranda"
+        class="w-full max-w-5xl bg-neu-bg rounded-neu shadow-neu p-8 md:p-12 flex flex-col md:flex-row items-center gap-10"
+      >
+        <div class="relative">
+          <div
+            class="w-48 h-48 rounded-full shadow-neu border-4 border-neu-bg flex items-center justify-center overflow-hidden mx-auto"
+          >
+            <img
+              src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
+              alt="Foto profil Muhammad Abdul Karim Luthfi"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <span
+            class="absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1 rounded-full bg-neu-bg shadow-neu-sm text-xs font-semibold text-green-500"
+          >
+            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse" aria-hidden="true"></span>
+            Open to work
+          </span>
+
+          <div class="flex justify-center gap-4 mt-8">
+            <a
+              href="https://github.com/luthfi1771"
+              class="neu-btn w-12 h-12 rounded-full bg-neu-bg shadow-neu flex items-center justify-center text-xl text-neu-icon hover:text-blue-600 transition-all"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
             >
-              <i class="fas fa-image"></i>
-            </div>
-            <h4 class="text-xl font-bold mb-2 text-neu-heading">Desain Festival Hadroh</h4>
-            <p class="text-sm text-neu-text opacity-80">
-              Banner publikasi acara Maulid Nabi & Festival Hadroh Universitas.
-            </p>
+              <i class="fab fa-github" aria-hidden="true"></i>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/muhammad-abdul-karim-luthfi-40283033b"
+              class="neu-btn w-12 h-12 rounded-full bg-neu-bg shadow-neu flex items-center justify-center text-xl text-neu-icon hover:text-blue-400 transition-all"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+            >
+              <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+            </a>
+            <a
+              href="https://www.instagram.com/muhammad.17abdulkarim"
+              class="neu-btn w-12 h-12 rounded-full bg-neu-bg shadow-neu flex items-center justify-center text-xl text-neu-icon hover:text-pink-500 transition-all"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+            >
+              <i class="fab fa-instagram" aria-hidden="true"></i>
+            </a>
           </div>
         </div>
+
+        <div class="flex-1 text-center md:text-left">
+          <p class="text-sm font-bold tracking-widest opacity-60 uppercase mb-2">Portfolio</p>
+          <h1 class="text-4xl md:text-5xl font-extrabold text-neu-heading mb-4 text-balance">
+            Halo, Saya
+            <span class="text-blue-500">Muhammad Abdul Karim Luthfi</span>
+          </h1>
+          <p class="text-lg font-semibold text-neu-heading mb-4 min-h-[1.75rem]">
+            <span id="typed-text" class="typing">Web Developer</span>
+          </p>
+          <p class="text-neu-text opacity-90 leading-relaxed mb-8">
+            Saya seorang mahasiswa Sistem & Teknologi Informasi yang fokus pada Web Development
+            (CodeIgniter) dan Desain Grafis. Saya suka membuat banner acara dan mengubah foto
+            menjadi karya seni digital.
+          </p>
+
+          <div class="grid grid-cols-2 gap-4 mb-8">
+            <div class="p-4 rounded-2xl shadow-neu-pressed text-sm font-semibold flex items-center gap-3">
+              <i class="fas fa-code text-blue-500" aria-hidden="true"></i> Web Dev (CI4)
+            </div>
+            <div class="p-4 rounded-2xl shadow-neu-pressed text-sm font-semibold flex items-center gap-3">
+              <i class="fas fa-camera text-purple-500" aria-hidden="true"></i> Photography
+            </div>
+            <div class="p-4 rounded-2xl shadow-neu-pressed text-sm font-semibold flex items-center gap-3">
+              <i class="fas fa-paint-brush text-pink-500" aria-hidden="true"></i> Banner Design
+            </div>
+            <div class="p-4 rounded-2xl shadow-neu-pressed text-sm font-semibold flex items-center gap-3">
+              <i class="fas fa-futbol text-green-500" aria-hidden="true"></i> Football Fan
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+            <a
+              href="cv/CV-Muhammad-Abdul-Karim-Luthfi.pdf"
+              download
+              class="neu-btn px-8 py-3 rounded-full bg-neu-bg shadow-neu font-bold text-neu-icon hover:text-blue-600 transition-all flex items-center justify-center gap-2"
+            >
+              <i class="fas fa-download" aria-hidden="true"></i> Download CV
+            </a>
+            <a
+              href="#kontak"
+              class="neu-btn px-8 py-3 rounded-full shadow-neu bg-blue-500 text-white font-bold hover:bg-blue-600 transition-all flex items-center justify-center gap-2"
+            >
+              <i class="fas fa-paper-plane" aria-hidden="true"></i> Hubungi Saya
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= TENTANG ================= -->
+      <section id="tentang" class="w-full max-w-5xl reveal" aria-labelledby="tentang-title">
+        <div class="text-center mb-10">
+          <p class="text-sm font-bold tracking-widest uppercase text-blue-500 mb-2">Tentang Saya</p>
+          <h2 id="tentang-title" class="text-3xl font-extrabold text-neu-heading">Kenalan Lebih Dekat</h2>
+        </div>
+
+        <div class="grid md:grid-cols-5 gap-8">
+          <div class="md:col-span-3 bg-neu-bg rounded-neu shadow-neu p-8 leading-relaxed space-y-4">
+            <p>
+              Saya adalah mahasiswa jurusan <strong class="text-neu-heading">Sistem & Teknologi Informasi</strong>
+              yang senang menggabungkan logika pemrograman dengan sentuhan visual. Bagi saya, sebuah
+              website yang baik bukan hanya berfungsi dengan benar, tetapi juga nyaman dilihat dan
+              mudah digunakan.
+            </p>
+            <p>
+              Di sisi pengembangan web, saya banyak bekerja dengan <strong class="text-neu-heading">CodeIgniter 4</strong>,
+              PHP, dan MySQL untuk membangun sistem informasi yang membantu kebutuhan nyata, seperti
+              manajemen data masjid. Di sisi kreatif, saya aktif membuat desain banner dan publikasi
+              acara, serta mengolah foto menjadi karya seni digital.
+            </p>
+            <p>
+              Di luar layar, saya adalah penggemar sepak bola yang percaya bahwa kerja sama tim dan
+              konsistensi adalah kunci untuk menang — baik di lapangan maupun dalam proyek.
+            </p>
+          </div>
+
+          <div class="md:col-span-2 grid grid-cols-2 gap-6">
+            <div class="bg-neu-bg rounded-3xl shadow-neu p-6 flex flex-col items-center justify-center text-center neu-element">
+              <i class="fas fa-laptop-code text-3xl text-blue-500 mb-3" aria-hidden="true"></i>
+              <p class="text-sm font-semibold text-neu-heading">Web Development</p>
+            </div>
+            <div class="bg-neu-bg rounded-3xl shadow-neu p-6 flex flex-col items-center justify-center text-center neu-element">
+              <i class="fas fa-palette text-3xl text-pink-500 mb-3" aria-hidden="true"></i>
+              <p class="text-sm font-semibold text-neu-heading">Desain Grafis</p>
+            </div>
+            <div class="bg-neu-bg rounded-3xl shadow-neu p-6 flex flex-col items-center justify-center text-center neu-element">
+              <i class="fas fa-camera-retro text-3xl text-purple-500 mb-3" aria-hidden="true"></i>
+              <p class="text-sm font-semibold text-neu-heading">Fotografi</p>
+            </div>
+            <div class="bg-neu-bg rounded-3xl shadow-neu p-6 flex flex-col items-center justify-center text-center neu-element">
+              <i class="fas fa-users text-3xl text-green-500 mb-3" aria-hidden="true"></i>
+              <p class="text-sm font-semibold text-neu-heading">Kerja Tim</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= KEAHLIAN ================= -->
+      <section id="keahlian" class="w-full max-w-5xl reveal" aria-labelledby="keahlian-title">
+        <div class="text-center mb-10">
+          <p class="text-sm font-bold tracking-widest uppercase text-blue-500 mb-2">Keahlian</p>
+          <h2 id="keahlian-title" class="text-3xl font-extrabold text-neu-heading">Tools & Teknologi</h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="bg-neu-bg rounded-neu shadow-neu p-8">
+            <h3 class="text-lg font-bold text-neu-heading mb-6 flex items-center gap-3">
+              <span class="w-10 h-10 rounded-full shadow-neu-pressed flex items-center justify-center text-blue-500">
+                <i class="fas fa-code" aria-hidden="true"></i>
+              </span>
+              Web Development
+            </h3>
+            <ul class="space-y-5">
+              <li>
+                <div class="flex justify-between text-sm font-semibold mb-2"><span>HTML & CSS</span><span>90%</span></div>
+                <div class="h-3 rounded-full shadow-neu-pressed overflow-hidden"><div class="skill-bar-fill h-full rounded-full bg-blue-500" data-width="90%"></div></div>
+              </li>
+              <li>
+                <div class="flex justify-between text-sm font-semibold mb-2"><span>PHP & CodeIgniter 4</span><span>80%</span></div>
+                <div class="h-3 rounded-full shadow-neu-pressed overflow-hidden"><div class="skill-bar-fill h-full rounded-full bg-blue-500" data-width="80%"></div></div>
+              </li>
+              <li>
+                <div class="flex justify-between text-sm font-semibold mb-2"><span>MySQL</span><span>75%</span></div>
+                <div class="h-3 rounded-full shadow-neu-pressed overflow-hidden"><div class="skill-bar-fill h-full rounded-full bg-blue-500" data-width="75%"></div></div>
+              </li>
+              <li>
+                <div class="flex justify-between text-sm font-semibold mb-2"><span>JavaScript</span><span>70%</span></div>
+                <div class="h-3 rounded-full shadow-neu-pressed overflow-hidden"><div class="skill-bar-fill h-full rounded-full bg-blue-500" data-width="70%"></div></div>
+              </li>
+              <li>
+                <div class="flex justify-between text-sm font-semibold mb-2"><span>Tailwind CSS & Bootstrap</span><span>80%</span></div>
+                <div class="h-3 rounded-full shadow-neu-pressed overflow-hidden"><div class="skill-bar-fill h-full rounded-full bg-blue-500" data-width="80%"></div></div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="bg-neu-bg rounded-neu shadow-neu p-8">
+            <h3 class="text-lg font-bold text-neu-heading mb-6 flex items-center gap-3">
+              <span class="w-10 h-10 rounded-full shadow-neu-pressed flex items-center justify-center text-pink-500">
+                <i class="fas fa-paint-brush" aria-hidden="true"></i>
+              </span>
+              Desain & Kreatif
+            </h3>
+            <ul class="space-y-5">
+              <li>
+                <div class="flex justify-between text-sm font-semibold mb-2"><span>Desain Banner & Poster</span><span>90%</span></div>
+                <div class="h-3 rounded-full shadow-neu-pressed overflow-hidden"><div class="skill-bar-fill h-full rounded-full bg-pink-500" data-width="90%"></div></div>
+              </li>
+              <li>
+                <div class="flex justify-between text-sm font-semibold mb-2"><span>Photo Manipulation</span><span>80%</span></div>
+                <div class="h-3 rounded-full shadow-neu-pressed overflow-hidden"><div class="skill-bar-fill h-full rounded-full bg-pink-500" data-width="80%"></div></div>
+              </li>
+              <li>
+                <div class="flex justify-between text-sm font-semibold mb-2"><span>Fotografi</span><span>75%</span></div>
+                <div class="h-3 rounded-full shadow-neu-pressed overflow-hidden"><div class="skill-bar-fill h-full rounded-full bg-pink-500" data-width="75%"></div></div>
+              </li>
+              <li>
+                <div class="flex justify-between text-sm font-semibold mb-2"><span>UI Design</span><span>70%</span></div>
+                <div class="h-3 rounded-full shadow-neu-pressed overflow-hidden"><div class="skill-bar-fill h-full rounded-full bg-pink-500" data-width="70%"></div></div>
+              </li>
+            </ul>
+
+            <h4 class="text-sm font-bold uppercase tracking-widest opacity-70 mt-8 mb-4">Tools Harian</h4>
+            <div class="flex flex-wrap gap-3">
+              <span class="px-4 py-2 rounded-full shadow-neu-sm text-xs font-semibold flex items-center gap-2"><i class="fab fa-git-alt text-orange-500" aria-hidden="true"></i> Git</span>
+              <span class="px-4 py-2 rounded-full shadow-neu-sm text-xs font-semibold flex items-center gap-2"><i class="fab fa-github" aria-hidden="true"></i> GitHub</span>
+              <span class="px-4 py-2 rounded-full shadow-neu-sm text-xs font-semibold flex items-center gap-2"><i class="fas fa-terminal text-blue-500" aria-hidden="true"></i> VS Code</span>
+              <span class="px-4 py-2 rounded-full shadow-neu-sm text-xs font-semibold flex items-center gap-2"><i class="fab fa-figma text-purple-500" aria-hidden="true"></i> Figma</span>
+              <span class="px-4 py-2 rounded-full shadow-neu-sm text-xs font-semibold flex items-center gap-2"><i class="fas fa-image text-pink-500" aria-hidden="true"></i> Photoshop</span>
+              <span class="px-4 py-2 rounded-full shadow-neu-sm text-xs font-semibold flex items-center gap-2"><i class="fas fa-shapes text-teal-500" aria-hidden="true"></i> Canva</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= LAYANAN ================= -->
+      <section id="layanan" class="w-full max-w-5xl reveal" aria-labelledby="layanan-title">
+        <div class="text-center mb-10">
+          <p class="text-sm font-bold tracking-widest uppercase text-blue-500 mb-2">Layanan</p>
+          <h2 id="layanan-title" class="text-3xl font-extrabold text-neu-heading">Apa yang Bisa Saya Bantu</h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <article class="bg-neu-bg rounded-neu shadow-neu p-8 neu-element">
+            <div class="w-16 h-16 rounded-2xl shadow-neu-pressed flex items-center justify-center text-2xl text-blue-500 mb-6">
+              <i class="fas fa-globe" aria-hidden="true"></i>
+            </div>
+            <h3 class="text-xl font-bold text-neu-heading mb-3">Pembuatan Website</h3>
+            <p class="text-sm leading-relaxed opacity-90">
+              Website profil, sistem informasi, dan dashboard admin berbasis CodeIgniter 4 yang
+              responsif dan mudah dikelola.
+            </p>
+          </article>
+          <article class="bg-neu-bg rounded-neu shadow-neu p-8 neu-element">
+            <div class="w-16 h-16 rounded-2xl shadow-neu-pressed flex items-center justify-center text-2xl text-pink-500 mb-6">
+              <i class="fas fa-bullhorn" aria-hidden="true"></i>
+            </div>
+            <h3 class="text-xl font-bold text-neu-heading mb-3">Desain Banner & Publikasi</h3>
+            <p class="text-sm leading-relaxed opacity-90">
+              Banner, poster, dan feed media sosial untuk acara kampus, organisasi, maupun kegiatan
+              keagamaan.
+            </p>
+          </article>
+          <article class="bg-neu-bg rounded-neu shadow-neu p-8 neu-element">
+            <div class="w-16 h-16 rounded-2xl shadow-neu-pressed flex items-center justify-center text-2xl text-purple-500 mb-6">
+              <i class="fas fa-wand-magic-sparkles" aria-hidden="true"></i>
+            </div>
+            <h3 class="text-xl font-bold text-neu-heading mb-3">Editing Foto & Digital Art</h3>
+            <p class="text-sm leading-relaxed opacity-90">
+              Mengolah foto menjadi karya seni digital, retouching, hingga manipulasi foto kreatif.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <!-- ================= PERJALANAN ================= -->
+      <section id="perjalanan" class="w-full max-w-5xl reveal" aria-labelledby="perjalanan-title">
+        <div class="text-center mb-10">
+          <p class="text-sm font-bold tracking-widest uppercase text-blue-500 mb-2">Perjalanan</p>
+          <h2 id="perjalanan-title" class="text-3xl font-extrabold text-neu-heading">Pendidikan & Pengalaman</h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="bg-neu-bg rounded-neu shadow-neu p-8">
+            <h3 class="text-lg font-bold text-neu-heading mb-6 flex items-center gap-3">
+              <i class="fas fa-graduation-cap text-blue-500" aria-hidden="true"></i> Pendidikan
+            </h3>
+            <ol class="relative border-l-2 border-blue-500/30 ml-2 space-y-8">
+              <li class="pl-6 relative">
+                <span class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-blue-500 ring-4 ring-[var(--bg-color)]" aria-hidden="true"></span>
+                <p class="text-xs font-bold text-blue-500 uppercase tracking-wider mb-1">Sekarang</p>
+                <h4 class="font-bold text-neu-heading">S1 Sistem & Teknologi Informasi</h4>
+                <p class="text-sm opacity-90 mt-1">
+                  Mempelajari rekayasa perangkat lunak, basis data, dan pengembangan aplikasi web.
+                </p>
+              </li>
+              <li class="pl-6 relative">
+                <span class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-blue-500/60 ring-4 ring-[var(--bg-color)]" aria-hidden="true"></span>
+                <p class="text-xs font-bold text-blue-500 uppercase tracking-wider mb-1">Belajar Mandiri</p>
+                <h4 class="font-bold text-neu-heading">Web Development & Desain Grafis</h4>
+                <p class="text-sm opacity-90 mt-1">
+                  Mendalami framework CodeIgniter 4, Tailwind CSS, serta teknik desain dan editing foto.
+                </p>
+              </li>
+            </ol>
+          </div>
+
+          <div class="bg-neu-bg rounded-neu shadow-neu p-8">
+            <h3 class="text-lg font-bold text-neu-heading mb-6 flex items-center gap-3">
+              <i class="fas fa-briefcase text-pink-500" aria-hidden="true"></i> Pengalaman
+            </h3>
+            <ol class="relative border-l-2 border-pink-500/30 ml-2 space-y-8">
+              <li class="pl-6 relative">
+                <span class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-pink-500 ring-4 ring-[var(--bg-color)]" aria-hidden="true"></span>
+                <p class="text-xs font-bold text-pink-500 uppercase tracking-wider mb-1">Web Developer</p>
+                <h4 class="font-bold text-neu-heading">SI Masjid Al Barkah</h4>
+                <p class="text-sm opacity-90 mt-1">
+                  Merancang dan membangun sistem informasi manajemen data masjid menggunakan CodeIgniter 4.
+                </p>
+              </li>
+              <li class="pl-6 relative">
+                <span class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-pink-500/60 ring-4 ring-[var(--bg-color)]" aria-hidden="true"></span>
+                <p class="text-xs font-bold text-pink-500 uppercase tracking-wider mb-1">Desainer Publikasi</p>
+                <h4 class="font-bold text-neu-heading">Maulid Nabi & Festival Hadroh Universitas</h4>
+                <p class="text-sm opacity-90 mt-1">
+                  Membuat banner dan materi publikasi untuk acara kampus.
+                </p>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= PROYEK ================= -->
+      <section id="proyek" class="w-full max-w-5xl reveal" aria-labelledby="proyek-title">
+        <div class="text-center mb-8">
+          <p class="text-sm font-bold tracking-widest uppercase text-blue-500 mb-2">Portofolio</p>
+          <h2 id="proyek-title" class="text-3xl font-extrabold text-neu-heading">Proyek Terbaru</h2>
+        </div>
+
+        <div class="flex justify-center flex-wrap gap-3 mb-10" role="group" aria-label="Filter proyek">
+          <button class="filter-btn active neu-btn px-5 py-2 rounded-full bg-neu-bg shadow-neu-sm text-sm font-semibold transition-all" data-filter="all" aria-pressed="true">Semua</button>
+          <button class="filter-btn neu-btn px-5 py-2 rounded-full bg-neu-bg shadow-neu-sm text-sm font-semibold transition-all" data-filter="web" aria-pressed="false">Website</button>
+          <button class="filter-btn neu-btn px-5 py-2 rounded-full bg-neu-bg shadow-neu-sm text-sm font-semibold transition-all" data-filter="design" aria-pressed="false">Desain</button>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Project 1: SI Masjid Al Barkah -->
+          <a
+            href="https://www.masjidalbarkah.id"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-category="web"
+            class="project-card p-6 bg-neu-bg rounded-neu shadow-neu hover:shadow-neu-pressed transition-all group flex flex-col justify-between"
+          >
+            <div>
+              <div class="h-44 rounded-2xl shadow-neu-pressed mb-4 overflow-hidden relative">
+                <img
+                  src="img/masjid-albarkah.png"
+                  alt="Tampilan website SI Masjid Al Barkah"
+                  class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+                <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white text-sm font-semibold gap-2 backdrop-blur-[2px]">
+                  <span>Kunjungi Website</span>
+                  <i class="fas fa-external-link-alt text-xs" aria-hidden="true"></i>
+                </div>
+              </div>
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="text-xl font-bold text-neu-heading group-hover:text-blue-500 transition-colors">SI Masjid Al Barkah</h3>
+                <i class="fas fa-external-link-alt text-sm text-blue-500 opacity-75 group-hover:opacity-100" aria-hidden="true"></i>
+              </div>
+              <p class="text-sm opacity-80 mb-4">Website interaktif untuk manajemen data masjid dengan CodeIgniter 4.</p>
+              <div class="flex flex-wrap gap-2 mb-2">
+                <span class="px-3 py-1 rounded-full shadow-neu-pressed text-xs font-semibold">CodeIgniter 4</span>
+                <span class="px-3 py-1 rounded-full shadow-neu-pressed text-xs font-semibold">PHP</span>
+                <span class="px-3 py-1 rounded-full shadow-neu-pressed text-xs font-semibold">MySQL</span>
+              </div>
+            </div>
+            <div class="text-xs font-semibold text-blue-500 flex items-center gap-1.5 mt-3">
+              <i class="fas fa-globe" aria-hidden="true"></i>
+              <span>www.masjidalbarkah.id</span>
+            </div>
+          </a>
+
+          <!-- Project 2: Desain Festival Hadroh -->
+          <button
+            type="button"
+            data-category="design"
+            data-lightbox="img/festival-hadroh.png"
+            data-title="Desain Festival Hadroh"
+            class="project-card text-left p-6 bg-neu-bg rounded-neu shadow-neu hover:shadow-neu-pressed transition-all group flex flex-col justify-between"
+          >
+            <div>
+              <div class="h-44 rounded-2xl shadow-neu-pressed mb-4 overflow-hidden relative">
+                <img
+                  src="img/festival-hadroh.png"
+                  alt="Banner publikasi Festival Hadroh"
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+                <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white text-sm font-semibold gap-2 backdrop-blur-[2px]">
+                  <span>Lihat Desain</span>
+                  <i class="fas fa-expand text-xs" aria-hidden="true"></i>
+                </div>
+              </div>
+              <h3 class="text-xl font-bold mb-2 text-neu-heading group-hover:text-pink-500 transition-colors">Desain Festival Hadroh</h3>
+              <p class="text-sm opacity-80 mb-4">Banner publikasi acara Maulid Nabi & Festival Hadroh Universitas.</p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1 rounded-full shadow-neu-pressed text-xs font-semibold">Banner</span>
+              <span class="px-3 py-1 rounded-full shadow-neu-pressed text-xs font-semibold">Publikasi Acara</span>
+            </div>
+          </button>
+
+          <!-- Project 3: Photo to Digital Art -->
+          <button
+            type="button"
+            data-category="design"
+            data-lightbox="img/digital-art.png"
+            data-title="Photo to Digital Art"
+            class="project-card text-left p-6 bg-neu-bg rounded-neu shadow-neu hover:shadow-neu-pressed transition-all group flex flex-col justify-between"
+          >
+            <div>
+              <div class="h-44 rounded-2xl shadow-neu-pressed mb-4 overflow-hidden relative">
+                <img
+                  src="img/digital-art.png"
+                  alt="Hasil olahan foto menjadi karya seni digital"
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+                <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white text-sm font-semibold gap-2 backdrop-blur-[2px]">
+                  <span>Lihat Karya</span>
+                  <i class="fas fa-expand text-xs" aria-hidden="true"></i>
+                </div>
+              </div>
+              <h3 class="text-xl font-bold mb-2 text-neu-heading group-hover:text-purple-500 transition-colors">Photo to Digital Art</h3>
+              <p class="text-sm opacity-80 mb-4">Eksplorasi mengubah foto potret menjadi ilustrasi digital yang artistik.</p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1 rounded-full shadow-neu-pressed text-xs font-semibold">Photo Manipulation</span>
+              <span class="px-3 py-1 rounded-full shadow-neu-pressed text-xs font-semibold">Digital Art</span>
+            </div>
+          </button>
+        </div>
+
+        <div class="text-center mt-10">
+          <a
+            href="https://github.com/luthfi1771"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="neu-btn inline-flex items-center gap-2 px-8 py-3 rounded-full bg-neu-bg shadow-neu font-bold text-neu-icon hover:text-blue-600 transition-all"
+          >
+            <i class="fab fa-github" aria-hidden="true"></i> Lihat Lebih Banyak di GitHub
+          </a>
+        </div>
+      </section>
+
+      <!-- ================= KONTAK ================= -->
+      <section id="kontak" class="w-full max-w-5xl reveal" aria-labelledby="kontak-title">
+        <div class="text-center mb-10">
+          <p class="text-sm font-bold tracking-widest uppercase text-blue-500 mb-2">Kontak</p>
+          <h2 id="kontak-title" class="text-3xl font-extrabold text-neu-heading">Mari Bekerja Sama</h2>
+          <p class="mt-3 opacity-90 max-w-xl mx-auto">
+            Punya proyek website, butuh desain banner, atau sekadar ingin berdiskusi? Kirim pesan dan
+            saya akan segera membalas.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-5 gap-8">
+          <div class="md:col-span-2 flex flex-col gap-6">
+            <a
+              href="https://wa.me/628881150984"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="bg-neu-bg rounded-3xl shadow-neu p-6 flex items-center gap-4 neu-element group"
+            >
+              <span class="w-14 h-14 rounded-2xl shadow-neu-pressed flex items-center justify-center text-2xl text-green-500 shrink-0">
+                <i class="fab fa-whatsapp" aria-hidden="true"></i>
+              </span>
+              <span>
+                <span class="block text-xs font-bold uppercase tracking-wider opacity-70">WhatsApp</span>
+                <span class="block font-bold text-neu-heading group-hover:text-green-500 transition-colors">+62 888-1150-984</span>
+              </span>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/muhammad-abdul-karim-luthfi-40283033b"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="bg-neu-bg rounded-3xl shadow-neu p-6 flex items-center gap-4 neu-element group"
+            >
+              <span class="w-14 h-14 rounded-2xl shadow-neu-pressed flex items-center justify-center text-2xl text-blue-500 shrink-0">
+                <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+              </span>
+              <span>
+                <span class="block text-xs font-bold uppercase tracking-wider opacity-70">LinkedIn</span>
+                <span class="block font-bold text-neu-heading group-hover:text-blue-500 transition-colors">Muhammad Abdul Karim Luthfi</span>
+              </span>
+            </a>
+            <a
+              href="https://www.instagram.com/muhammad.17abdulkarim"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="bg-neu-bg rounded-3xl shadow-neu p-6 flex items-center gap-4 neu-element group"
+            >
+              <span class="w-14 h-14 rounded-2xl shadow-neu-pressed flex items-center justify-center text-2xl text-pink-500 shrink-0">
+                <i class="fab fa-instagram" aria-hidden="true"></i>
+              </span>
+              <span>
+                <span class="block text-xs font-bold uppercase tracking-wider opacity-70">Instagram</span>
+                <span class="block font-bold text-neu-heading group-hover:text-pink-500 transition-colors">@muhammad.17abdulkarim</span>
+              </span>
+            </a>
+          </div>
+
+          <form id="contact-form" class="md:col-span-3 bg-neu-bg rounded-neu shadow-neu p-8 flex flex-col gap-5" novalidate>
+            <div class="grid sm:grid-cols-2 gap-5">
+              <div>
+                <label for="name" class="block text-sm font-semibold text-neu-heading mb-2">Nama</label>
+                <input id="name" name="name" type="text" required autocomplete="name" placeholder="Nama lengkap" class="neu-input w-full rounded-2xl px-5 py-3 text-sm" />
+              </div>
+              <div>
+                <label for="topic" class="block text-sm font-semibold text-neu-heading mb-2">Keperluan</label>
+                <select id="topic" name="topic" class="neu-input w-full rounded-2xl px-5 py-3 text-sm">
+                  <option>Pembuatan Website</option>
+                  <option>Desain Banner / Poster</option>
+                  <option>Editing Foto / Digital Art</option>
+                  <option>Lainnya</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <label for="message" class="block text-sm font-semibold text-neu-heading mb-2">Pesan</label>
+              <textarea id="message" name="message" rows="5" required placeholder="Ceritakan kebutuhan Anda..." class="neu-input w-full rounded-2xl px-5 py-3 text-sm resize-none"></textarea>
+            </div>
+            <p id="form-error" class="hidden text-sm font-semibold text-red-500" role="alert"></p>
+            <button
+              type="submit"
+              class="neu-btn self-start px-8 py-3 rounded-full shadow-neu bg-blue-500 text-white font-bold hover:bg-blue-600 transition-all flex items-center gap-2"
+            >
+              <i class="fab fa-whatsapp" aria-hidden="true"></i> Kirim via WhatsApp
+            </button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="px-6 pb-10">
+      <div class="max-w-5xl mx-auto bg-neu-bg rounded-neu shadow-neu p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="text-center md:text-left">
+          <p class="font-extrabold text-neu-heading">Muhammad Abdul Karim Luthfi</p>
+          <p class="text-sm opacity-80">Web Developer & Desainer Grafis</p>
+        </div>
+        <p class="text-sm opacity-80 text-center">
+          &copy; <span id="year"></span> Luthfi. Dibuat dengan <i class="fas fa-heart text-pink-500" aria-hidden="true"></i><span class="sr-only">cinta</span> dan kopi.
+        </p>
+        <div class="flex gap-3">
+          <a href="https://github.com/luthfi1771" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="neu-btn w-10 h-10 rounded-full shadow-neu-sm flex items-center justify-center text-neu-icon hover:text-blue-600 transition-all"><i class="fab fa-github" aria-hidden="true"></i></a>
+          <a href="https://www.linkedin.com/in/muhammad-abdul-karim-luthfi-40283033b" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="neu-btn w-10 h-10 rounded-full shadow-neu-sm flex items-center justify-center text-neu-icon hover:text-blue-400 transition-all"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+          <a href="https://www.instagram.com/muhammad.17abdulkarim" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="neu-btn w-10 h-10 rounded-full shadow-neu-sm flex items-center justify-center text-neu-icon hover:text-pink-500 transition-all"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+        </div>
       </div>
-    </section>
+    </footer>
+
+    <!-- Tombol kembali ke atas -->
+    <a
+      href="#beranda"
+      id="back-to-top"
+      class="neu-btn fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full bg-neu-bg shadow-neu flex items-center justify-center text-neu-icon hover:text-blue-500 opacity-0 pointer-events-none transition-all"
+      aria-label="Kembali ke atas"
+    >
+      <i class="fas fa-arrow-up" aria-hidden="true"></i>
+    </a>
+
+    <!-- Lightbox -->
+    <dialog
+      id="lightbox"
+      class="bg-transparent p-0 max-w-4xl w-[92vw] backdrop:bg-black/70 backdrop:backdrop-blur-sm"
+      aria-labelledby="lightbox-title"
+    >
+      <div class="bg-neu-bg rounded-neu shadow-neu p-4">
+        <div class="flex items-center justify-between mb-3 px-2">
+          <h3 id="lightbox-title" class="font-bold text-neu-heading"></h3>
+          <button id="lightbox-close" class="neu-btn w-10 h-10 rounded-full shadow-neu-sm flex items-center justify-center text-neu-icon" aria-label="Tutup">
+            <i class="fas fa-times" aria-hidden="true"></i>
+          </button>
+        </div>
+        <img id="lightbox-img" src="" alt="" class="w-full max-h-[75vh] object-contain rounded-2xl" />
+      </div>
+    </dialog>
 
     <script>
-        const toggleBtn = document.getElementById('theme-toggle');
-        const themeIcon = document.getElementById('theme-icon');
-        const html = document.documentElement;
+      const html = document.documentElement;
 
-        // 1. Cek apakah user pernah simpan preferensi sebelumnya
-        const savedTheme = localStorage.getItem('theme');
-        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      // ---------- Tema ----------
+      const themeIcon = document.getElementById("theme-icon");
+      const syncThemeIcon = () => {
+        const dark = html.classList.contains("dark");
+        themeIcon.classList.toggle("fa-sun", dark);
+        themeIcon.classList.toggle("fa-moon", !dark);
+      };
+      syncThemeIcon();
+      document.getElementById("theme-toggle").addEventListener("click", () => {
+        const dark = html.classList.toggle("dark");
+        localStorage.setItem("theme", dark ? "dark" : "light");
+        syncThemeIcon();
+      });
 
-        if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
-            html.classList.add('dark');
-            themeIcon.classList.remove('fa-moon');
-            themeIcon.classList.add('fa-sun');
-        } else {
-            html.classList.remove('dark');
+      // ---------- Menu mobile ----------
+      const menuToggle = document.getElementById("menu-toggle");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const menuIcon = document.getElementById("menu-icon");
+      const setMenu = (open) => {
+        mobileMenu.classList.toggle("hidden", !open);
+        menuToggle.setAttribute("aria-expanded", String(open));
+        menuToggle.setAttribute("aria-label", open ? "Tutup menu" : "Buka menu");
+        menuIcon.classList.toggle("fa-bars", !open);
+        menuIcon.classList.toggle("fa-times", open);
+      };
+      menuToggle.addEventListener("click", () => setMenu(mobileMenu.classList.contains("hidden")));
+      document.querySelectorAll(".mobile-link").forEach((link) =>
+        link.addEventListener("click", () => setMenu(false))
+      );
+
+      // ---------- Efek mengetik ----------
+      const roles = ["Web Developer", "CodeIgniter 4 Enthusiast", "Desainer Grafis", "Digital Artist"];
+      const typedEl = document.getElementById("typed-text");
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!reduceMotion) {
+        let roleIndex = 0;
+        let charIndex = roles[0].length;
+        let deleting = true;
+        const tick = () => {
+          const word = roles[roleIndex];
+          charIndex += deleting ? -1 : 1;
+          typedEl.textContent = word.slice(0, charIndex);
+          let delay = deleting ? 50 : 90;
+          if (!deleting && charIndex === word.length) {
+            deleting = true;
+            delay = 1800;
+          } else if (deleting && charIndex === 0) {
+            deleting = false;
+            roleIndex = (roleIndex + 1) % roles.length;
+            delay = 300;
+          }
+          setTimeout(tick, delay);
+        };
+        setTimeout(tick, 1800);
+      }
+
+      // ---------- Animasi muncul saat scroll & skill bar ----------
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("visible");
+            entry.target.querySelectorAll(".skill-bar-fill").forEach((bar) => {
+              bar.style.width = bar.dataset.width;
+            });
+            revealObserver.unobserve(entry.target);
+          });
+        },
+        { threshold: 0.15 }
+      );
+      document.querySelectorAll(".reveal").forEach((el) => revealObserver.observe(el));
+
+      // ---------- Link navigasi aktif ----------
+      const navLinks = document.querySelectorAll(".nav-link");
+      const sectionObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const id = entry.target.id;
+            navLinks.forEach((link) =>
+              link.classList.toggle("active", link.getAttribute("href") === `#${id}`)
+            );
+          });
+        },
+        { rootMargin: "-45% 0px -50% 0px" }
+      );
+      document.querySelectorAll("main section[id]").forEach((s) => sectionObserver.observe(s));
+
+      // ---------- Tombol kembali ke atas ----------
+      const backToTop = document.getElementById("back-to-top");
+      window.addEventListener(
+        "scroll",
+        () => {
+          const show = window.scrollY > 600;
+          backToTop.classList.toggle("opacity-0", !show);
+          backToTop.classList.toggle("pointer-events-none", !show);
+        },
+        { passive: true }
+      );
+
+      // ---------- Filter proyek ----------
+      const filterBtns = document.querySelectorAll(".filter-btn");
+      const projectCards = document.querySelectorAll(".project-card");
+      filterBtns.forEach((btn) =>
+        btn.addEventListener("click", () => {
+          const filter = btn.dataset.filter;
+          filterBtns.forEach((b) => {
+            const active = b === btn;
+            b.classList.toggle("active", active);
+            b.setAttribute("aria-pressed", String(active));
+          });
+          projectCards.forEach((card) => {
+            card.classList.toggle("hidden", filter !== "all" && card.dataset.category !== filter);
+          });
+        })
+      );
+
+      // ---------- Lightbox ----------
+      const lightbox = document.getElementById("lightbox");
+      const lightboxImg = document.getElementById("lightbox-img");
+      const lightboxTitle = document.getElementById("lightbox-title");
+      document.querySelectorAll("[data-lightbox]").forEach((card) =>
+        card.addEventListener("click", () => {
+          lightboxImg.src = card.dataset.lightbox;
+          lightboxImg.alt = card.dataset.title;
+          lightboxTitle.textContent = card.dataset.title;
+          lightbox.showModal();
+        })
+      );
+      document.getElementById("lightbox-close").addEventListener("click", () => lightbox.close());
+      lightbox.addEventListener("click", (e) => {
+        if (e.target === lightbox) lightbox.close();
+      });
+
+      // ---------- Form kontak -> WhatsApp ----------
+      const form = document.getElementById("contact-form");
+      const formError = document.getElementById("form-error");
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const name = document.getElementById("name").value.trim();
+        const topic = document.getElementById("topic").value;
+        const message = document.getElementById("message").value.trim();
+        if (!name || !message) {
+          formError.textContent = "Mohon isi nama dan pesan terlebih dahulu.";
+          formError.classList.remove("hidden");
+          return;
         }
+        formError.classList.add("hidden");
+        const text = `Halo Luthfi, saya ${name}.\nKeperluan: ${topic}\n\n${message}`;
+        window.open(`https://wa.me/628881150984?text=${encodeURIComponent(text)}`, "_blank", "noopener");
+        form.reset();
+      });
 
-        // 2. Fungsi saat tombol ditekan
-        toggleBtn.addEventListener('click', () => {
-            if (html.classList.contains('dark')) {
-                // Matikan Dark Mode
-                html.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
-                themeIcon.classList.remove('fa-sun');
-                themeIcon.classList.add('fa-moon');
-            } else {
-                // Hidupkan Dark Mode
-                html.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
-            }
-        });
+      document.getElementById("year").textContent = new Date().getFullYear();
     </script>
   </body>
 </html>
