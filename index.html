@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neumorphic Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome untuk Ikon -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <script>
+      tailwind.config = {
+        darkMode: 'class', // Mengaktifkan dark mode via class
+        theme: {
+          extend: {
+            colors: {
+              // Menggunakan CSS Variables agar dinamis
+              'neu-bg': 'var(--bg-color)',
+              'neu-text': 'var(--text-color)',
+              'neu-heading': 'var(--heading-color)',
+              'neu-icon': 'var(--icon-color)',
+            },
+            boxShadow: {
+              neu: "var(--shadow-main)",
+              "neu-pressed":
+                "inset 6px 6px 10px 0 var(--shadow-dark), inset -6px -6px 10px 0 var(--shadow-light)",
+            },
+            borderRadius: {
+              neu: "30px",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      :root {
+        --bg-color: #e0e5ec;
+        --text-color: #6b7280;
+        --heading-color: #374151;
+        --icon-color: #4b5563;
+        --shadow-dark: #a3b1c6;
+        --shadow-light: #ffffff;
+        --shadow-main: 9px 9px 16px rgb(163, 177, 198, 0.6), -9px -9px 16px rgba(255, 255, 255, 0.5);
+      }
+
+      .dark {
+        --bg-color: #1e293b;
+        --text-color: #94a3b8;
+        --heading-color: #f8fafc;
+        --icon-color: #cbd5e1;
+        --shadow-dark: #0f172a;
+        --shadow-light: #334155;
+        --shadow-main: 8px 8px 16px #0f172a, -8px -8px 16px #2d3d54;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+      .neu-element {
+        transition: all 0.3s ease;
+      }
+      .neu-element:hover {
+        transform: translateY(-3px);
+      }
+      /* Efek tombol ditekan */
+      .neu-btn:active, .neu-card-active:active {
+        box-shadow:
+          inset 6px 6px 10px 0 var(--shadow-dark),
+          inset -6px -6px 10px 0 var(--shadow-light);
+        transform: translateY(2px);
+      }
+    </style>
+  </head>
+  <body
+    class="bg-neu-bg text-neu-text min-h-screen flex flex-col items-center justify-center p-6 relative"
+  >
+  
+    <button id="theme-toggle" class="fixed top-6 right-6 z-50 w-14 h-14 rounded-full bg-neu-bg shadow-neu flex items-center justify-center text-xl text-neu-icon hover:scale-110 active:scale-95 transition-all duration-300" aria-label="Toggle theme">
+        <i id="theme-icon" class="fas fa-moon"></i>
+    </button>
+
+    <main
+      class="w-full max-w-4xl bg-neu-bg rounded-neu shadow-neu p-8 md:p-12 flex flex-col md:flex-row items-center gap-10 transition-colors duration-300"
+    >
+      <div class="relative group">
+        <div
+          class="w-48 h-48 rounded-full shadow-neu border-4 border-neu-bg flex items-center justify-center overflow-hidden mx-auto transition-colors duration-300"
+        >
+          <img
+            src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
+            alt="Profile"
+            class="w-full h-full object-cover"
+          />
+        </div>
+
+        <div class="flex justify-center gap-4 mt-8">
+          <a
+            href="https://github.com/luthfi1771"
+            class="neu-btn w-12 h-12 rounded-full bg-neu-bg shadow-neu flex items-center justify-center text-xl text-neu-icon hover:text-blue-600 transition-all"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i class="fab fa-github"></i>
+          </a>
+          <a
+            href="https://www.linkedin.com/in/muhammad-abdul-karim-luthfi-40283033b"
+            class="neu-btn w-12 h-12 rounded-full bg-neu-bg shadow-neu flex items-center justify-center text-xl text-neu-icon hover:text-blue-400 transition-all"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a
+            href="https://www.instagram.com/muhammad.17abdulkarim"
+            class="neu-btn w-12 h-12 rounded-full bg-neu-bg shadow-neu flex items-center justify-center text-xl text-neu-icon hover:text-pink-500 transition-all"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i class="fab fa-instagram"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="flex-1 text-center md:text-left">
+        <h2
+          class="text-sm font-bold tracking-widest opacity-60 uppercase mb-2"
+        >
+          Portfolio
+        </h2>
+        <h1 class="text-4xl md:text-5xl font-extrabold text-neu-heading mb-4">
+          Halo, Saya
+          <span class="text-blue-500">Muhammad Abdul Karim Luthfi</span>
+        </h1>
+        <p class="text-neu-text opacity-90 leading-relaxed mb-8">
+          Saya seorang mahasiswa Sistem & Teknologi Informasi yang fokus pada
+          Web Development (CodeIgniter) dan Desain Grafis. Saya suka membuat
+          banner acara dan mengubah foto menjadi karya seni digital.
+        </p>
+
+        <div class="grid grid-cols-2 gap-4 mb-8">
+          <div
+            class="p-4 rounded-2xl shadow-neu-pressed text-sm font-semibold flex items-center gap-3 text-neu-text"
+          >
+            <i class="fas fa-code text-blue-500"></i> Web Dev (CI4)
+          </div>
+          <div
+            class="p-4 rounded-2xl shadow-neu-pressed text-sm font-semibold flex items-center gap-3 text-neu-text"
+          >
+            <i class="fas fa-camera text-purple-500"></i> Photography
+          </div>
+          <div
+            class="p-4 rounded-2xl shadow-neu-pressed text-sm font-semibold flex items-center gap-3 text-neu-text"
+          >
+            <i class="fas fa-paint-brush text-pink-500"></i> Banner Design
+          </div>
+          <div
+            class="p-4 rounded-2xl shadow-neu-pressed text-sm font-semibold flex items-center gap-3 text-neu-text"
+          >
+            <i class="fas fa-futbol text-green-500"></i> Football Fan
+          </div>
+        </div>
+
+        <div
+          class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
+        >
+          <button
+            class="neu-btn px-8 py-3 rounded-full bg-neu-bg shadow-neu font-bold text-neu-icon hover:text-blue-600 transition-all"
+          >
+            Download CV
+          </button>
+          <a 
+            href="https://wa.me/628881150984"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="neu-btn px-8 py-3 rounded-full shadow-neu bg-blue-500 text-white font-bold hover:bg-blue-600 transition-all border border-transparent flex items-center justify-center"
+          >
+            Hubungi Saya
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <section class="mt-16 w-full max-w-4xl">
+      <h3 class="text-2xl font-bold text-center mb-8 text-neu-heading">
+        Proyek Terbaru
+      </h3>
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Project 1: SI Masjid Al Barkah -->
+        <a
+          href="https://www.masjidalbarkah.id"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="p-6 bg-neu-bg rounded-neu shadow-neu hover:shadow-neu-pressed transition-all cursor-pointer group flex flex-col justify-between"
+        >
+          <div>
+            <div
+              class="h-44 rounded-2xl shadow-neu-pressed mb-4 overflow-hidden relative flex items-center justify-center bg-gray-100 dark:bg-gray-800"
+            >
+              <img
+                src="img/masjid-albarkah.png"
+                alt="Thumbnail SI Masjid Al Barkah"
+                class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+              />
+              <div
+                class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white text-sm font-semibold gap-2 backdrop-blur-[2px]"
+              >
+                <span>Kunjungi Website</span>
+                <i class="fas fa-external-link-alt text-xs"></i>
+              </div>
+            </div>
+            <div class="flex items-center justify-between mb-2">
+              <h4 class="text-xl font-bold text-neu-heading group-hover:text-blue-500 transition-colors">
+                SI Masjid Al Barkah
+              </h4>
+              <i class="fas fa-external-link-alt text-sm text-blue-500 opacity-75 group-hover:opacity-100 transition-opacity"></i>
+            </div>
+            <p class="text-sm text-neu-text opacity-80 mb-3">
+              Website interaktif untuk manajemen data masjid dengan CodeIgniter 4.
+            </p>
+          </div>
+          <div class="text-xs font-semibold text-blue-500 flex items-center gap-1.5 mt-2">
+            <i class="fas fa-globe"></i>
+            <span>www.masjidalbarkah.id</span>
+          </div>
+        </a>
+
+        <!-- Project 2: Desain Festival Hadroh -->
+        <div
+          class="p-6 bg-neu-bg rounded-neu shadow-neu hover:shadow-neu-pressed transition-all cursor-pointer group flex flex-col justify-between"
+        >
+          <div>
+            <div
+              class="h-44 rounded-2xl shadow-neu-pressed mb-4 flex items-center justify-center text-4xl text-gray-400 group-hover:text-pink-500 transition-colors"
+            >
+              <i class="fas fa-image"></i>
+            </div>
+            <h4 class="text-xl font-bold mb-2 text-neu-heading">Desain Festival Hadroh</h4>
+            <p class="text-sm text-neu-text opacity-80">
+              Banner publikasi acara Maulid Nabi & Festival Hadroh Universitas.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+        const toggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const html = document.documentElement;
+
+        // 1. Cek apakah user pernah simpan preferensi sebelumnya
+        const savedTheme = localStorage.getItem('theme');
+        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+            html.classList.add('dark');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        } else {
+            html.classList.remove('dark');
+        }
+
+        // 2. Fungsi saat tombol ditekan
+        toggleBtn.addEventListener('click', () => {
+            if (html.classList.contains('dark')) {
+                // Matikan Dark Mode
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            } else {
+                // Hidupkan Dark Mode
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            }
+        });
+    </script>
+  </body>
+</html>
