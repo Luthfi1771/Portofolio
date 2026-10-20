@@ -371,11 +371,11 @@
               Di sisi pengembangan web, saya banyak bekerja dengan <strong class="text-neu-heading">CodeIgniter 4</strong>,
               PHP, dan MySQL untuk membangun sistem informasi yang membantu kebutuhan nyata, seperti
               manajemen data masjid. Di sisi kreatif, saya aktif membuat desain banner dan publikasi
-              acara, serta mengolah foto menjadi karya seni digital.
+              acara.
             </p>
             <p>
               Di luar layar, saya adalah penggemar sepak bola yang percaya bahwa kerja sama tim dan
-              konsistensi adalah kunci untuk menang — baik di lapangan maupun dalam proyek.
+              konsistensi adalah kunci untuk menang, baik di lapangan maupun dalam proyek.
             </p>
           </div>
 
@@ -425,16 +425,12 @@
                 <div class="h-3 rounded-full shadow-neu-pressed overflow-hidden"><div class="skill-bar-fill h-full rounded-full bg-blue-500" data-width="80%"></div></div>
               </li>
               <li>
-                <div class="flex justify-between text-sm font-semibold mb-2"><span>MySQL</span><span>75%</span></div>
+                <div class="flex justify-between text-sm font-semibold mb-2"><span>MySQL</span><span>70%</span></div>
                 <div class="h-3 rounded-full shadow-neu-pressed overflow-hidden"><div class="skill-bar-fill h-full rounded-full bg-blue-500" data-width="75%"></div></div>
               </li>
               <li>
-                <div class="flex justify-between text-sm font-semibold mb-2"><span>JavaScript</span><span>70%</span></div>
+                <div class="flex justify-between text-sm font-semibold mb-2"><span>JavaScript</span><span>50%</span></div>
                 <div class="h-3 rounded-full shadow-neu-pressed overflow-hidden"><div class="skill-bar-fill h-full rounded-full bg-blue-500" data-width="70%"></div></div>
-              </li>
-              <li>
-                <div class="flex justify-between text-sm font-semibold mb-2"><span>Tailwind CSS & Bootstrap</span><span>80%</span></div>
-                <div class="h-3 rounded-full shadow-neu-pressed overflow-hidden"><div class="skill-bar-fill h-full rounded-full bg-blue-500" data-width="80%"></div></div>
               </li>
             </ul>
           </div>
@@ -450,10 +446,6 @@
               <li>
                 <div class="flex justify-between text-sm font-semibold mb-2"><span>Desain Banner & Poster</span><span>90%</span></div>
                 <div class="h-3 rounded-full shadow-neu-pressed overflow-hidden"><div class="skill-bar-fill h-full rounded-full bg-pink-500" data-width="90%"></div></div>
-              </li>
-              <li>
-                <div class="flex justify-between text-sm font-semibold mb-2"><span>Photo Manipulation</span><span>80%</span></div>
-                <div class="h-3 rounded-full shadow-neu-pressed overflow-hidden"><div class="skill-bar-fill h-full rounded-full bg-pink-500" data-width="80%"></div></div>
               </li>
               <li>
                 <div class="flex justify-between text-sm font-semibold mb-2"><span>Fotografi</span><span>75%</span></div>
@@ -510,9 +502,9 @@
             <div class="w-16 h-16 rounded-2xl shadow-neu-pressed flex items-center justify-center text-2xl text-purple-500 mb-6">
               <i class="fas fa-wand-magic-sparkles" aria-hidden="true"></i>
             </div>
-            <h3 class="text-xl font-bold text-neu-heading mb-3">Editing Foto & Digital Art</h3>
+            <h3 class="text-xl font-bold text-neu-heading mb-3">Fotografi</h3>
             <p class="text-sm leading-relaxed opacity-90">
-              Mengolah foto menjadi karya seni digital, retouching, hingga manipulasi foto kreatif.
+              Perfotoan Acara Kegiatan Islam Seperti Maulid Nabi Muhammad SAW, Isra Mi'raj, dll.
             </p>
           </article>
         </div>
@@ -632,14 +624,14 @@
           <button
             type="button"
             data-category="design"
-            data-lightbox="img/festival-hadroh.png"
+            data-lightbox="img/FESTIVAL.png"
             data-title="Desain Festival Hadroh"
             class="project-card text-left p-6 bg-neu-bg rounded-neu shadow-neu hover:shadow-neu-pressed transition-all group flex flex-col justify-between"
           >
             <div>
               <div class="h-44 rounded-2xl shadow-neu-pressed mb-4 overflow-hidden relative">
                 <img
-                  src="img/festival-hadroh.png"
+                  src="img/FESTIVAL.png"
                   alt="Banner publikasi Festival Hadroh"
                   class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   loading="lazy"
@@ -659,7 +651,7 @@
           </button>
 
           <!-- Project 3: Photo to Digital Art -->
-          <button
+          <!-- <button
             type="button"
             data-category="design"
             data-lightbox="img/digital-art.png"
@@ -687,7 +679,7 @@
               <span class="px-3 py-1 rounded-full shadow-neu-pressed text-xs font-semibold">Digital Art</span>
             </div>
           </button>
-        </div>
+        </div> -->
 
         <div class="text-center mt-10">
           <a
@@ -769,7 +761,6 @@
                 <select id="topic" name="topic" class="neu-input w-full rounded-2xl px-5 py-3 text-sm">
                   <option>Pembuatan Website</option>
                   <option>Desain Banner / Poster</option>
-                  <option>Editing Foto / Digital Art</option>
                   <option>Lainnya</option>
                 </select>
               </div>
@@ -869,7 +860,7 @@
       );
 
       // ---------- Efek mengetik ----------
-      const roles = ["Web Developer", "CodeIgniter 4 Enthusiast", "Desainer Grafis", "Digital Artist"];
+      const roles = ["Web Developer", "CodeIgniter 4 Enthusiast", "Desainer Grafis"];
       const typedEl = document.getElementById("typed-text");
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (!reduceMotion) {
